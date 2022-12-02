@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+<!-- чтобы запутсить сервер, заходим в папку api_meal, и в терминале пишем: node index.js -->
 
 <head>
   <meta charset="UTF-8">
@@ -17,7 +18,8 @@
   <title>YourMeal - Самые сочные бургеры</title>
 
   <link rel="stylesheet" href="css/index.css">
-  <script src="js/index.js" defer></script>
+  <script type="module" src="js/index.js"></script>
+  <!-- испольузем модульную структуру,type="module" рабоатет также как и  defer^ по тому же приницпу -->
 </head>
 
 <body>
@@ -45,6 +47,7 @@
               data-category="burger">Бургеры</button>
           </li>
           <li class="navigation__item">
+            <!--атрибут  data-category нужен чтобы фильтровать:-->
             <button class="navigation__button navigation__button_snack" data-category="snack">Закуски</button>
           </li>
           <li class="navigation__item">

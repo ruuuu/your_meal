@@ -1,9 +1,11 @@
+import { modalProduct, catalogList } from "./elements.js";
+import { createCardProduct } from "./createCardProduct.js";
+import { openModal } from "./openModal.js";
+import { renderListProduct } from "./renderListProduct.js";
+import { navigationListController } from './navigationListController.js';
 
-const productDetail = document.querySelector('.product__detail'); // button
-const modalProduct = document.querySelector('.modal_product');
-const catalogList = document.querySelector('.catalog__list'); // ul
 
-const product = {             // пока это даннеы с сервера
+const burgerMax = {             // пока это даннеы с сервера
       title: 'Бургер мах',
       price: '1000',
       weight: '500',
@@ -19,53 +21,25 @@ const product = {             // пока это даннеы с сервера
       ]
 };
 
-const modalProductTitle = document.querySelector('.modal-product__title');
-const modalProductDescription = document.querySelector('.modal-product__description');
-const ingredientsList = document.querySelector('.ingredients__list');
-const ingredientsCalories = document.querySelector('.ingredients__calories');
-const modalProductPriceCount = document.querySelector('.modal-product__price-count');
-const modalProductImage = document.querySelector('.modal-product__image');
-
-modalProductTitle.textContent = product.title;
-modalProductImage.src = product.image;
-modalProductDescription.textContent = product.description;
-ingredientsCalories.textContent = product.calories;
-modalProductPriceCount.textContent = product.price;
 
 
-// 1 ый вариант:
-ingredientsList.textContent = ''; //  очищаем спсико изначально
-// for (let i = 0; i < product.ingredients.length; i++) {
-//       const li = document.createElement('li');
-//       li.classList.add('ingredients__item');
-//       li.textContent = product.ingredients[i];
-//       ingredientsList.append(li);
-// }
 
-// 2-ой вариант:
-const ingredientsListItems = product.ingredients.map((item) => { //  полуичм новый масиив
-      const li = document.createElement('li');
-      li.classList.add('ingredients__item');
-      li.textContent = item;
-      return li; //  положили в массив этот li
-});
-//console.log(ingredientsListItems); // [li.ingredients__item, li.ingredients__item]
-ingredientsList.append(...ingredientsListItems);
 
-// 3-ий вариант:
-// product.ingredients.forEach((item) => {
-//       const li = document.createElement('li');
-//       li.classList.add('ingredients__item');
-//       li.textContent = item;
-//       ingredientsList.append(li);
-// });
+
+
+
+
+//const item = createCardProduct(burgerMax);
+//console.log('item  ', item);
+//catalogList.append(createCardProduct(burgerMax), createCardProduct(burgerMax), createCardProduct(burgerMax));       // append можеи приримтаь нескоько элементов
+
 
 
 
 catalogList.addEventListener('click', (evt) => {                           // чтбы не вешать клик на каждый title  картчоки,мы вшаем  клик на их родителя (catalogList), это назввается делегирование. При клике на любую картчоку откроется модалка
       const target = evt.target;
-      if (target.closest('.product__detail') || target.closest('.product__image')) {                               // если у нажатого жлемент/его родителя есть класс .product__detail
-            modalProduct.classList.add('modal_open');
+      if (target.closest('.product__detail') || target.closest('.product__image')) {  // если у нажатого жлемент/его родителя есть класс .product__detail
+            openModal(burgerMax);
       }
 
 });
@@ -80,3 +54,12 @@ modalProduct.addEventListener('click', (evt) => {              // чтоыб н�
       }
 });
 
+
+
+const init = () => {                      // отсюда все начинается
+      renderListProduct();                // рендер карточек
+      navigationListController();         // фильтрация  
+};
+
+
+init(); 
