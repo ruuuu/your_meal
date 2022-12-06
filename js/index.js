@@ -1,30 +1,8 @@
 import { modalProduct, catalogList } from "./elements.js";
-import { createCardProduct } from "./createCardProduct.js";
 import { openModal } from "./openModal.js";
 import { renderListProduct } from "./renderListProduct.js";
 import { navigationListController } from './navigationListController.js';
-
-
-const burgerMax = {             // пока это даннеы с сервера
-      title: 'Бургер мах',
-      price: '1000',
-      weight: '500',
-      calories: '1234',
-      description: 'Огромный бургер, съешь сам или поделись с другими',
-      image: 'img/megaburger.jpg',
-      ingredients: [
-            'Пшеничная булочка',
-            'Мега котлета из говядины',
-            'Много сыра',
-            'Листья салата',
-            'Чипотл'
-      ]
-};
-
-
-
-
-
+import { cartInit } from "./cart.js";
 
 
 
@@ -39,8 +17,11 @@ const burgerMax = {             // пока это даннеы с сервер�
 catalogList.addEventListener('click', (evt) => {                           // чтбы не вешать клик на каждый title  картчоки,мы вшаем  клик на их родителя (catalogList), это назввается делегирование. При клике на любую картчоку откроется модалка
       const target = evt.target;
       if (target.closest('.product__detail') || target.closest('.product__image')) {  // если у нажатого жлемент/его родителя есть класс .product__detail
-            openModal(burgerMax);
+            const id = target.closest('.product').dataset.idProduct;                      //  получаем значеие дата атрибута
+            //console.log(id);
+            openModal(id);
       }
+
 
 });
 
@@ -50,15 +31,17 @@ modalProduct.addEventListener('click', (evt) => {              // чтоыб н�
       const target = evt.target;                               // нажатй элемегт
 
       if (target.closest('.modal__close') || target === modalProduct) {                   //  если  наадали на кретсик или нажатый элемент или его родитель имеет класс modal__close
-            modalProduct.classList.remove('modal_open');                            // закрываем модалку
+            modalProduct.classList.remove('modal_open');                                  // закрываем модалку
       }
 });
 
 
 
 const init = () => {                      // отсюда все начинается
-      renderListProduct();                // рендер карточек
-      navigationListController();         // фильтрация  
+      renderListProduct('burger');                // рендер карточек
+      navigationListController(renderListProduct);         // фильтрация, renderListProduct это коллбэк функция  
+      cartInit();
+
 };
 
 

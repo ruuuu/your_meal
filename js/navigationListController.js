@@ -2,7 +2,7 @@ import { navigationList, navigationListItems, catalogTitle } from "./elements.js
 
 // фильрация товаров по категориям:
 
-export const navigationListController = () => {
+export const navigationListController = (cb) => {           // cb- коллбэк фунуия которая передается в др функуию как параметр
 
       navigationList.addEventListener('click', (evt) => {         // вместо того чтобы вешать клик на каждую кнпоку, повеси  клик на их родителя, это  нзв делегирование
             const categoryItem = evt.target.closest('.navigation__button');         //  получим нажатый элемент
@@ -12,10 +12,11 @@ export const navigationListController = () => {
                   return;                 // ничего дальше не будет выполняться
             }
 
-            navigationListItems.forEach(button => {         // перебираем кнопки
+            navigationListItems.forEach((button) => {         // перебираем кнопки
                   if (button === categoryItem) {
                         button.classList.add('navigation__button_active');
                         catalogTitle.textContent = button.textContent;
+                        cb(button.dataset.category);                               // вызов коллбэк фукнции, button.dataset.category -  получаем значение дата-атрибута data-category
                   } else {
                         button.classList.remove('navigation__button_active');                   //  у сотальных кнпок убираем класс
                   }

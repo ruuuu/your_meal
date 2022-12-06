@@ -1,10 +1,17 @@
-import { ingredientsList, modalProductTitle, modalProductImage, modalProductDescription, ingredientsCalories, modalProductPriceCount, modalProduct } from "./elements.js";
+import { ingredientsList, modalProductTitle, modalProductImage, modalProductDescription, ingredientsCalories, modalProductPriceCount, modalProduct, modalProductBtn } from "./elements.js";
+import { getData } from "./getData.js";
+import { PREFIX_PRODUCT, API_URL } from "./const.js";
 
 
-export const openModal = (product) => {
+
+// откртыие модалки товара:
+export const openModal = async (id) => {                    // тк  в этой фукнуии будет запрос на сервер, поэтому поставим фукнции async, .then() не будем использовать, им щас редко пользуются
+
+      const product = await getData(`${API_URL}${PREFIX_PRODUCT}/${id}`);            // { id, title, descrition,  price, weight, image }
+      console.log('product feom sever ', product);
 
       modalProductTitle.textContent = product.title;
-      modalProductImage.src = product.image;
+      modalProductImage.src = `${API_URL}/${product.image}`;
       modalProductDescription.textContent = product.description;
       ingredientsCalories.textContent = `${product.weight}кг  ${product.calories}кал`;
       modalProductPriceCount.textContent = product.price;
@@ -20,11 +27,11 @@ export const openModal = (product) => {
       // }
 
       // 2-ой вариант:
-      const ingredientsListItems = product.ingredients.map((item) => { //  полуичм новый масиив
+      const ingredientsListItems = product.ingredients.map((item) => {              //  полуичм новый масиив
             const li = document.createElement('li');
             li.classList.add('ingredients__item');
             li.textContent = item;
-            return li; //  положили в массив этот li
+            return li;                          //  положили в массив этот li
       });
       //console.log(ingredientsListItems); // [li.ingredients__item, li.ingredients__item]
       ingredientsList.append(...ingredientsListItems);
@@ -37,6 +44,7 @@ export const openModal = (product) => {
       //       ingredientsList.append(li);
       // });
 
-      modalProduct.classList.add('modal_open');                         // сперва заполняем молаку, а потом  открываем  ее
+      modalProductBtn.dataset.idProduct = product.id;                           // кнопке Добавить (в модалке)  добавили дата-атрибут id-product
+      modalProduct.classList.add('modal_open');                         // сперва заполняем модалку, а потом  открываем  ее
 };
 

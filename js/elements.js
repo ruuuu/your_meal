@@ -11,5 +11,10 @@ export const modalProductImage = document.querySelector('.modal-product__image')
 
 export const navigationList = document.querySelector('.navigation__list');
 export const navigationListItems = document.querySelectorAll('.navigation__button'); // [button button]
-
 export const catalogTitle = document.querySelector('.catalog__title');
+export const modalProductBtn = document.querySelector('.modal-product__btn');             // кнпока Добавить в модалке
+export const cartAmount = document.querySelector('.modal-product .count__amount');           // счетчик товаров в модалке
+
+export const orderCount = document.querySelector('.order__count');            // число товаров в корзине
+export const orderList = document.querySelector('.order__list');              // ul список товаров в корзине
+export const orderTotalAmount = document.querySelector('.order__total-amount');        // итговая стоимость

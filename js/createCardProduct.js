@@ -5,8 +5,9 @@ import { API_URL } from "./const.js";
 export const createCardProduct = (product) => {             // product= {id, title, price, weight} -товар
       const li = document.createElement('li');
       li.classList.add('catalog__item');
+      // в <article> добавили дата-атрибут чтобы  при  нажатии на карточку бургера, модалка октрывается и отображается инфа именно об этом бургере
       li.innerHTML = `
-            <article class="product">
+            <article class="product" data-id-product=${product.id}>
                   <img class="product__image" src="${API_URL}/${product.image}" alt="${product.title}">
                   <p class="product__price">${product.price}<span class="currency">₽</span></p>
                   <h3 class="product__title">
