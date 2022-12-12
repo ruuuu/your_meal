@@ -6,6 +6,4 @@ export const getData = async (url) => {
             return response.json();                //response.json() тоже асинхронный метод
       }
 
-
-
 };

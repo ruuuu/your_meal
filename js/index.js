@@ -41,7 +41,6 @@ const init = () => {                      // отсюда все начинае�
       renderListProduct('burger');                // рендер карточек
       navigationListController(renderListProduct);         // фильтрация, renderListProduct это коллбэк функция  
       cartInit();
-
 };
 
 
