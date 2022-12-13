@@ -1,5 +1,5 @@
 // корзина:
-import { catalogList, modalProductBtn, cartAmount, orderCount, orderList } from "./elements.js";
+import { catalogList, modalProductBtn, cartAmount, orderCount, orderList, orderTotalAmount } from "./elements.js";
 import { getData } from "./getData.js";
 import { API_URL, PREFIX_PRODUCT } from "./const.js";
 
@@ -27,18 +27,18 @@ const getCart = () => {
 
 
 // отображение верстки товаров в корзине:
-const renderCartList = async () => {                        // фукнция асинхронная тк в ней делаем запрос на сервер
-      const cartList = getCart();                           // получам данные из лок хранилища [{id: 34255, count: 3}, {id:1231 , count: 2}, {id: , count: }]
+const renderCartList = async () => {                        // фукнция асинхронная тк в ней делаем запрос на сервер в getData()
+      const cartList = getCart();                           // получам данные из лок хранилища [{id: 34255, count: 3},  {id:1231 , count: 2},  {id: , count: }]
 
       const allIdProducts = cartList.map(element => {       //  получим массив id ов
             return element.id;
       });
       // console.log('allIdProducts ', allIdProducts);
 
-      const dataProducts = await getData(`${API_URL}${PREFIX_PRODUCT}/?list=${allIdProducts}`);          // массив  товаров из Корзины [{}, {}, {}]
+      const dataProducts = await getData(`${API_URL}${PREFIX_PRODUCT}/?list=${allIdProducts}`);          // массив  товаров из Корзины [{id:, title:, price:, weight:}, {id:, title:, price:, weight:}, {}]
       // console.log('dataProducts ', dataProducts);
 
-      const countProduct = cartList.reduce((acc, item, index, array) => {      //  acc- счетчик, к нему  будем прибавлять,  по умолчанию acc=item. Это как sum+=
+      const countProduct = cartList.reduce((acc, item, index, array) => {      // перебираем массив cartList,  acc - аккумулятор, к нему  будем прибавлять,  по умолчанию acc=item. Это как sum+=
             return (acc + item.count);
       }, 0);                              // 0-нач значение acc
 
@@ -46,9 +46,22 @@ const renderCartList = async () => {                        // фукнция а
 
 
 
-      const listCardTrash = dataProducts.map((item) => {   // для каждого элемента массива  вызовется фукнция createCardProduct, и  ее результат кладется в массив listCardTrash = [li, li, li, li]
+      const listCardTrash = dataProducts.map((item) => {                // для каждого элемента массива  вызовется коллбэк и  ее результат кладется в массив listCardTrash = [li, li, li, li]
             const li = document.createElement('li');
             li.classList.add('order__item');
+            li.dataset.idProduct = item.id;                             // добавляем li дата-атртбут, чтобы можно было обавлять или убавлять число товара
+
+            const cartProduct = cartList.find((cartItem) => {               // перьираем  [{id:324, count:5},  {id:111, count:3},  {id:435, count:6}]
+                  return (cartItem.id === item.id);                       // item.id -константа
+            });
+
+            // console.log('cartProduct after find', cartProduct);                 // {id:324, count:5}
+            // let sum = 0;
+            // const commonPrice = dataProducts.forEach((item) => {
+            //       sum += item.price * cartProduct.count;
+            // });
+
+            // orderTotalAmount.textContent = commonPrice;
 
             li.innerHTML = `
                   <img src="${API_URL}/${item.image}" alt="Супер сырный" class="order__image">
@@ -59,7 +72,7 @@ const renderCartList = async () => {                        // фукнция а
                   </div>
                   <div class="order__product-count count">
                         <button class="count__minus">-</button>
-                        <p class="count__amount">1</p>
+                        <p class="count__amount">${cartProduct.count}</p>
                         <button class="count__plus">+</button>
                   </div>
             `;
@@ -69,7 +82,7 @@ const renderCartList = async () => {                        // фукнция а
 
       orderList.textContent = '';                           // очтщаем изначально спсиок
 
-      orderList.append(...listCardTrash);
+      orderList.append(...listCardTrash);                   // всавляем массив из li в ul
 };
 
 
