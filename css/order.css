@@ -12,6 +12,9 @@
   background: #FFFFFF;
   border-radius: 12px;
   padding: 16px 10px;
+  /*чтобы этот врапер перкрывал картчоки товаров*/
+  z-index: 100;
+
 }
 
 .order__wrap-title {
@@ -21,11 +24,19 @@
   margin-bottom: 8px;
 }
 
+
+
+
 .order__title {
   font-weight: 600;
   font-size: 16px;
   line-height: 100%;
 }
+
+.order__title:hover {
+  color: #FFAB08;
+}
+
 
 .order__count {
   display: flex;
@@ -123,6 +134,7 @@
 .order__submit:disabled {
   background-color: #F9F9F9;
   color: #ACACAC;
+  cursor: no-drop;
 }
 
 .order__appeal {
@@ -131,6 +143,8 @@
   line-height: 16px;
   background: url('../img/delivery.png') left no-repeat;
 }
+
+
 
 @media(min-width: 768px) {
   .order__wrapper {
@@ -169,6 +183,10 @@
 
   .order__title {
     font-size: 24px;
+  }
+
+  .order__title:hover {
+    color: inherit;
   }
 
   .order__count {

@@ -18,3 +18,9 @@ export const cartAmount = document.querySelector('.modal-product .count__amount'
 export const orderCount = document.querySelector('.order__count');            // число товаров в корзине
 export const orderList = document.querySelector('.order__list');              // ul список товаров в корзине
 export const orderTotalAmount = document.querySelector('.order__total-amount');        // итговая стоимость
+
+export const order = document.querySelector('.order');            // Корзина
+export const orderWrapTitle = document.querySelector('.order__wrap-title');
+export const orderSubmit = document.querySelector('.order__submit'); //  кнпока Офрмить заказ
+
+export const modalDelivery = document.querySelector('.modal_delivery');  // модлка Офомить заказ
