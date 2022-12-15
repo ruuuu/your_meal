@@ -10,7 +10,7 @@ export const modalProductPriceCount = document.querySelector('.modal-product__pr
 export const modalProductImage = document.querySelector('.modal-product__image');
 
 export const navigationList = document.querySelector('.navigation__list');
-export const navigationListItems = document.querySelectorAll('.navigation__button'); // [button button]
+export const navigationListItems = document.querySelectorAll('.navigation__button');      // [button button]
 export const catalogTitle = document.querySelector('.catalog__title');
 export const modalProductBtn = document.querySelector('.modal-product__btn');             // кнпока Добавить в модалке
 export const cartAmount = document.querySelector('.modal-product .count__amount');           // счетчик товаров в модалке
@@ -23,4 +23,5 @@ export const order = document.querySelector('.order');            // Корзи�
 export const orderWrapTitle = document.querySelector('.order__wrap-title');
 export const orderSubmit = document.querySelector('.order__submit'); //  кнпока Офрмить заказ
 
-export const modalDelivery = document.querySelector('.modal_delivery');  // модлка Офомить заказ
+export const modalDelivery = document.querySelector('.modal_delivery');  // модалка Офомить заказ
+export const modalDeliveryForm = document.querySelector('.modal-delivery__form');   // форма отправки заказа

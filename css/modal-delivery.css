@@ -2,14 +2,16 @@
   --gap: 8px;
 }
 
+
 .modal-delivery__container {
   max-width: 300px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
   height: 100%;
-  
+
 }
+
 
 .modal-delivery__title {
   font-weight: 600;
@@ -18,10 +20,12 @@
   margin-bottom: 18px;
 }
 
+
 .modal-delivery__form {
   flex-grow: 1;
   margin-bottom: 24px;
 }
+
 
 .modal-delivery__fieldset-input {
   display: flex;
@@ -30,9 +34,17 @@
   margin-bottom: 24px;
 }
 
+
+.modal-delivery__fieldset-input_hide {
+  visibility: hidden;
+  /*скрваем эелмент*/
+}
+
+
 .modal-delivery__fieldset-input:last-child {
   margin-bottom: 0;
 }
+
 
 .modal-delivery__input {
   width: 100%;
@@ -45,9 +57,11 @@
   color: #B1B1B1;
 }
 
+
 .modal-delivery__fieldset-radio {
   margin-bottom: 24px;
 }
+
 
 .modal-delivery__label {
   font-size: 10px;
@@ -57,9 +71,11 @@
   align-items: center;
 }
 
+
 .modal-delivery__label:last-child {
   margin-bottom: 0;
 }
+
 
 .modal-delivery__radio {
   margin-right: 8px;
@@ -67,9 +83,11 @@
   height: 12px;
 }
 
+
 .modal-delivery__input_half {
   width: calc((100% - var(--gap)) / 2)
 }
+
 
 .modal-delivery__btn {
   width: 100%;
@@ -82,6 +100,10 @@
   margin-top: auto;
 }
 
+
+
+
+
 @media (min-width: 480px) {
   .modal-delivery {
     padding: 20px 16px 29px;
@@ -92,11 +114,12 @@
   }
 }
 
+
 @media (min-width: 1024px) {
   .modal-delivery {
     padding: 54px 24px 24px;
     padding-left: 366px;
-    background: url('../img/donut.png') 19px 65px no-repeat, linear-gradient(to right,  #FFAB08 342px, #FFF 342px);
+    background: url('../img/donut.png') 19px 65px no-repeat, linear-gradient(to right, #FFAB08 342px, #FFF 342px);
     background-size: 302px, auto;
   }
 
@@ -104,31 +127,31 @@
     font-size: 24px;
     margin-bottom: 16px;
   }
-  
+
   .modal-delivery__form {
     margin-bottom: 32px;
   }
-  
+
   .modal-delivery__fieldset-input {
     margin-bottom: 16px;
   }
-  
+
   .modal-delivery__input {
     height: 40px;
     padding: 12px;
     font-size: 12px;
   }
-  
+
   .modal-delivery__fieldset-radio {
     margin-bottom: 16px;
   }
-  
+
   .modal-delivery__label {
     font-size: 12px;
     line-height: 16px;
     margin-bottom: 12px;
   }
-  
+
   .modal-delivery__btn {
     font-size: 16px;
     padding: 12px;

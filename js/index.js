@@ -7,6 +7,7 @@ import { cartInit } from "./cart.js";
 
 
 
+
 //const item = createCardProduct(burgerMax);
 //console.log('item  ', item);
 //catalogList.append(createCardProduct(burgerMax), createCardProduct(burgerMax), createCardProduct(burgerMax));       // append можеи приримтаь нескоько элементов
@@ -41,6 +42,7 @@ const init = () => {                      // отсюда все начинае�
       renderListProduct('burger');                // рендер карточек
       navigationListController(renderListProduct);         // фильтрация, renderListProduct это коллбэк функция  
       cartInit();
+
 };
 
 

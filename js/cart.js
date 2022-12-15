@@ -2,6 +2,9 @@
 import { catalogList, modalProductBtn, cartAmount, orderCount, orderList, orderTotalAmount, order, orderWrapTitle, orderSubmit, modalDelivery } from "./elements.js";
 import { getData } from "./getData.js";
 import { API_URL, PREFIX_PRODUCT } from "./const.js";
+import { orderController } from "./orderController.js";
+
+
 
 
 // получение корзины из localStorage:
@@ -26,7 +29,7 @@ const getCart = () => {
 
 
 
-// отображение верстки товаров в корзине:
+// отображение верстки товаров  корзины(в блок слева):
 const renderCartList = async () => {                              // фукнция асинхронная тк в ней делаем запрос на сервер в getData()
       const cartList = getCart();                                 // получам данные из лок хранилища [{id: 34255, count: 3},  {id:1231 , count: 2},  {id: , count: }]
       console.log('cartList ', cartList);
@@ -78,7 +81,7 @@ const renderCartList = async () => {                              // фукнц�
 
       orderList.textContent = '';                           // очтщаем изначально спсиок
 
-      orderList.append(...listCardTrash);                   // всавляем массив из li в ul
+      orderList.append(...listCardTrash);                   // вставляем массив из li в ul
 
 
       orderTotalAmount.textContent = dataProducts.reduce((acc, item) => {
@@ -87,11 +90,6 @@ const renderCartList = async () => {                              // фукнц�
             return acc + (item.price * cartProduct.count);
       }, 0);                                                // 0-нач значение acc;
 };
-
-
-
-
-
 
 
 
@@ -181,7 +179,7 @@ const cartController = () => {                                                //
       });
 
 
-      modalDelivery.addEventListener('click', ({ target }) => {         // либо вместо { target } можно передать evt
+      modalDelivery.addEventListener('click', ({ target }) => {                           // либо вместо { target } можно передать evt и потом испльзвать evt.target
             if (target.closest('.modal__close') || modalDelivery === target) {                      // если нажали на крестик или на оверлей модалки
                   modalDelivery.classList.remove('modal_open');
             }
@@ -196,5 +194,5 @@ export const cartInit = () => {
       cartController();
       renderCartList();                   // отображение товаров в коризне(locaoStorage) [{id: , count:}, {id: , count:}, {id: , count:}]
       addCart();                          // добавление товарв в коризну(locaoStorage)
-
+      orderController(getCart);           //  передаем фукнцию getCart()
 };
