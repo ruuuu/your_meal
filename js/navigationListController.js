@@ -4,7 +4,7 @@ import { navigationList, navigationListItems, catalogTitle } from "./elements.js
 
 export const navigationListController = (cb) => {           // cb- коллбэк фунуия которая передается в др функуию как параметр
 
-      navigationList.addEventListener('click', (evt) => {         // вместо того чтобы вешать клик на каждую кнпоку, повеси  клик на их родителя, это  нзв делегирование
+      navigationList.addEventListener('click', (evt) => {         // вместо того чтобы вешать клик на каждую кнпоку, повесили  клик на их родителя, это  нзв делегирование события
             const categoryItem = evt.target.closest('.navigation__button');         //  получим нажатый элемент
             //console.log(categoryItem);
 
