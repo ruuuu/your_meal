@@ -11,10 +11,10 @@ import { orderController } from "./orderController.js";
 const getCart = () => {
       //  товары  корзины храним в localStorage - это хранилище внутри браузера, в нем хранится все в виде строки-json, а не  в объектах
       const cartList = localStorage.getItem('cart');                          // ключ cart 
-      //console.log('cartList string', cartList);
+      // console.log('cartList string', cartList);
 
-      if (cartList) {
-            //console.log('JSON.parse(cartList); ', JSON.parse(cartList));                                                       // если cartList сущемтвует
+      if (cartList) {                     //  если корзина есть
+            // console.log('JSON.parse(cartList); ', JSON.parse(cartList));                                                       // если cartList сущемтвует
             return JSON.parse(cartList);                                      // извлекаем даннеы из хранилища localStorage , преобразовываем строку в объект(или массив), то есть [{id: , count: }, {id: , count: }, {id: , count: }]
       }
       else {                                    //   если в хранилище ничего не было
@@ -22,9 +22,6 @@ const getCart = () => {
       }
 
 };
-
-
-
 
 
 
@@ -58,6 +55,7 @@ const renderCartList = async () => {                              // фукнц�
             li.classList.add('order__item');
             li.dataset.idProduct = item.id;                             // добавляем li дата-атртбут, чтобы можно было обавлять или убавлять число товара
 
+            // находим item(товар корзины) в cartList:
             const cartProduct = cartList.find((cartItem) => {               // перьираем  [{id:324, count:5},  {id:111, count:3},  {id:435, count:6}], найдет первй элемент массива удовлетворяющий услвоию
                   return (cartItem.id === item.id);                       // item.id -константа
             });
@@ -81,13 +79,11 @@ const renderCartList = async () => {                              // фукнц�
       });
 
       orderList.textContent = '';                           // очтщаем изначально спсиок
-
       orderList.append(...listCardTrash);                   // вставляем массив из li в ul
 
 
       orderTotalAmount.textContent = dataProducts.reduce((acc, item) => {
-
-            const cartProduct = cartList.find((cartItem) => cartItem.id === item.id);                 // это сокращенная запись, расшифровка: return (cartItem.id === item.id)
+            const cartProduct = cartList.find((cartItem) => cartItem.id === item.id);                 // это сокращенная запись, расшифровка: { return (cartItem.id === item.id) }
             return acc + (item.price * cartProduct.count);
       }, 0);                                                // 0-нач значение acc;
 };
@@ -98,26 +94,28 @@ const renderCartList = async () => {                              // фукнц�
 
 
 // обновлние корзины(localStorage) cartList:
-const updateCartList = (cartList) => {                                  // cartList =  [ {id, count}, {id, count} ]
+const updateCartList = (cartList) => {                                           // cartList =  [ {id: , count: }, {id: , count: } ]
       localStorage.setItem('cart', JSON.stringify(cartList));                   // записываем данные в  хранилище, JSON.stringify() переводит объект(или массив)  в строку(в хранилище данные хранятся в  виде строки)
-      renderCartList();
+      renderCartList();                                                         // отрисовываем верстку корзины
 };
 
 
 
 
-// добавление товара в корзину(localStorage), вызвовется кгда жмем на "Добавить"или кнопку +, а именно запсиываем его id и его количество, весь товар записывать смысла нет. Если count не передали, аанчит передаться count=1:
-const addCart = (id, count = 1) => {
+//  id  товара  добавляеммго  в корзину(localStorage), вызвовется кгда жмем на "Добавить"или кнопку +, а именно запсиываем его id и его количество, весь товар записывать смысла нет. Если count не передали, аанчит передаться count=1:
+export const addCart = (id, count = 1) => {
       const cartList = getCart();               // [{id, count},{id, count},{id, count}] товары из корзины(localStorage)
+
+      //   ищем, нет ли  уже товара c id в корзине:
       const product = cartList.find((item) => {       // переберет массив и  вернет первый элемент котрый удовлентворяет условиею
             return item.id === id;
       });
 
-      if (product) {                      // product = {id, count} 
+      if (product) {                      // если товар с его  id есть в Корзине, то увеличиваем его число. product = {id, count} 
             product.count += count;
       }
-      else {
-            cartList.push({ id, count });       // добавили товар в корзину 
+      else {                              // если товара  с id нет в Корзине, то добавляем его в корзину
+            cartList.push({ id, count });       // добавили товар { id, count } в корзину 
       }
 
       updateCartList(cartList);                 // обновлнямм localStarge 
@@ -129,7 +127,7 @@ const addCart = (id, count = 1) => {
 
 
 // удаление товаров из корзины  по id товара, когда жмем на кнпоку -, вызоветя этот метод:
-const removeCart = (id) => {                    // методом slice  перебрать массив, и удалить элемент(по его id) из массива
+export const removeCart = (id) => {                    // методом slice  перебрать массив, и удалить элемент(по его id) из массива
       const cartList = getCart();               // [{id: , count: },  {id: , count: }]
       const productIndex = cartList.findIndex((item) => item.id === id);            // получим индекс элемента, котрый удовелтворяет условию
       cartList[productIndex].count -= 1;
@@ -153,7 +151,7 @@ export const clearCart = () => {
 
 const cartController = () => {                                                // в контроллеры добавляются слушатели addEventListener
 
-      // собвтие вешаем не на отдельную кнопку Добавить, а на ее родителя:
+      // собвтие вешаем не на отдельную кнопку Добавить(на карточке товара), а на ее родителя(ul), это делегироваине события:
       catalogList.addEventListener('click', ({ target }) => {                 // вытащили из объекта  target(деструткуризация это значит вытащить поле  из объекта), вместо того чтобы писать evt.target
             if (target.closest('.product__add')) {                            // кнопка Добавить на картчоке
                   addCart(target.closest('.product').dataset.idProduct);       // передаем id  доавляемого товара                                          // добавляем товар по его id  в корзину
@@ -161,12 +159,12 @@ const cartController = () => {                                                //
       });
 
 
-      modalProductBtn.addEventListener('click', () => {                 // кнопка Добавить в модалке
-            parseInt(addCart(modalProductBtn.dataset.idProduct, cartAmount.textContent)); // parseInt() переводит из строки в число
+      modalProductBtn.addEventListener('click', () => {                 // кнопка Добавить в модалке товара
+            addCart(modalProductBtn.dataset.idProduct, parseInt(cartAmount.textContent));             // parseInt() переводит из строки в целое  число
       });
 
 
-      orderList.addEventListener('click', (evt) => {                      // обработик вешаем не на кнопку, а на ее родителя (ul), это называется делеирование
+      orderList.addEventListener('click', (evt) => {                      // обработчик вешаем не на кнопку =/-, а на ее родителя (ul), это называется делегирование события
             const targetPlus = evt.target.closest('.count__plus');       // кнпока +
             if (targetPlus) {
                   addCart(targetPlus.dataset.idProduct);                // переадем id

@@ -39,7 +39,7 @@ modalProduct.addEventListener('click', (evt) => {              // чтоыб н�
 const init = () => {                      // отсюда все начинается
       renderListProduct('burger');                // рендер карточек
       navigationListController(renderListProduct);         // фильтрация, renderListProduct это коллбэк функция  
-      cartInit();
+      cartInit();                                           // работа с  корзиной
 
 };
 
