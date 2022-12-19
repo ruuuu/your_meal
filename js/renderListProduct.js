@@ -11,6 +11,13 @@ export const renderListProduct = async (category = 'burger') => {       // categ
 
       const listProduct = await getData(`${API_URL}${PREFIX_PRODUCT}?category=${category}`);       // тк getData отправляем запрос на сервер, то это асинхронная операция, поэтому ставим async/await
       console.log('listProduct ', listProduct);
+      // если не ставить async/await, тогда можно написать так:
+      // getData(`${API_URL}${PREFIX_PRODUCT}?category=${category}`)
+      //       .then((listProduct) => {                                       // listProduct - ответ от сервера 
+      //             const listCard = listProduct.map(createCardProduct);  
+      //             catalogList.append(...listCard);
+      //  });
+
 
       const listCard = listProduct.map(createCardProduct);   // для каждого элемента массива  вызовется фукнция createCardProduct, и  ее результат кладется в массив listCard = [li, li, li, li]
       //console.log('listCard ', listCard);

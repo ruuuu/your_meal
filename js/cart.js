@@ -30,6 +30,9 @@ const getCart = () => {
 // отображение верстки товаров  корзины(в блок слева):
 const renderCartList = async () => {                              // фукнция асинхронная тк в ней делаем запрос на сервер в getData()
       const cartList = getCart();                                 // получам данные из лок хранилища [{id: 34255, count: 3},  {id:1231 , count: 2},  {id: , count: }]
+
+
+
       console.log('cartList ', cartList);
 
       orderSubmit.disabled = !cartList.length;                    // если  корзина пустая, то кнопку отправки дизейблим
@@ -153,8 +156,8 @@ const cartController = () => {                                                //
 
       // собвтие вешаем не на отдельную кнопку Добавить(на карточке товара), а на ее родителя(ul), это делегироваине события:
       catalogList.addEventListener('click', ({ target }) => {                 // вытащили из объекта  target(деструткуризация это значит вытащить поле  из объекта), вместо того чтобы писать evt.target
-            if (target.closest('.product__add')) {                            // кнопка Добавить на картчоке
-                  addCart(target.closest('.product').dataset.idProduct);       // передаем id  доавляемого товара                                          // добавляем товар по его id  в корзину
+            if (target.closest('.product__add')) {   // либо можно target.classlist.contains('product__add')                          // кнопка Добавить на картчоке
+                  addCart(target.closest('.product').dataset.idProduct);       // передаем id  доавляемого товара                                       // добавляем товар по его id  в корзину
             }
       });
 
@@ -165,12 +168,12 @@ const cartController = () => {                                                //
 
 
       orderList.addEventListener('click', (evt) => {                      // обработчик вешаем не на кнопку =/-, а на ее родителя (ul), это называется делегирование события
-            const targetPlus = evt.target.closest('.count__plus');       // кнпока +
+            const targetPlus = evt.target.closest('.count__plus');       // кнпока +,  вернет элемент-кнопку   
             if (targetPlus) {
                   addCart(targetPlus.dataset.idProduct);                // переадем id
             }
 
-            const targetMinus = evt.target.closest('.count__minus');       // кнпока -
+            const targetMinus = evt.target.closest('.count__minus');       // кнпока -,  вернет элемент-кнопку   
             if (targetMinus) {
                   removeCart(targetMinus.dataset.idProduct);                // переадем id
             }
