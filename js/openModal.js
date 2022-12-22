@@ -5,7 +5,7 @@ import { addCart, removeCart } from './cart.js';
 
 
 
-// отрисока верстки модалки товара:
+// отрисовка верстки модалки товара:
 export const openModal = async (id) => {                    // тк  в этой фукнуии будет запрос на сервер, поэтому поставим фукнции async, .then() не будем использовать, им щас редко пользуются
 
       const product = await getData(`${API_URL}${PREFIX_PRODUCT}/${id}`);            // { id, title, descrition,  price, weight, image }, ставим await тк запро на сервер идет 
@@ -14,8 +14,9 @@ export const openModal = async (id) => {                    // тк  в этой
 
 
 
-      // 1 ый вариант:
+
       ingredientsList.textContent = ''; //  очищаем спсико изначально
+      // 1 ый вариант:
       // for (let i = 0; i < product.ingredients.length; i++) {
       //       const li = document.createElement('li');
       //       li.classList.add('ingredients__item');
